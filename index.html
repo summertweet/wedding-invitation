@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="林少雄 & 刘珍妮 的婚礼邀请函">
+  <meta name="format-detection" content="telephone=no">
+  <meta property="og:title" content="林少雄 & 刘珍妮 的婚礼邀请">
+  <meta property="og:description" content="诚挚邀请您参加我们的婚礼">
+  <meta property="og:image" content="images/photo1.jpg">
+  <title>林少雄 & 刘珍妮 婚礼邀请</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Noto+Serif+SC:wght@200;300;400;600;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 背景音乐 -->
+  <button id="music-toggle" class="music-btn paused" aria-label="音乐开关">
+    <svg class="music-icon" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55C7.79 13 6 14.79 6 17s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+    </svg>
+  </button>
+  <audio id="bg-music" loop preload="auto">
+    <source src="music/background.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- 飘落花瓣 -->
+  <div id="petals-container" class="petals-container"></div>
+
+  <!-- ==================== 主容器 ==================== -->
+  <main class="main-scroll" id="main-scroll">
+
+    <!-- ========== 封面区域 ========== -->
+    <section class="hero" id="hero">
+      <div class="hero-photo">
+        <img src="images/photo1.jpg" alt="我们的合影" class="hero-img">
+      </div>
+      <div class="hero-overlay">
+        <p class="hero-invite anim-fade-up">送呈</p>
+        <h1 class="hero-guest-name anim-fade-up" id="guest-name">尊贵的宾客</h1>
+        <p class="hero-invite-sub anim-fade-up">亲启</p>
+      </div>
+      <div class="hero-bottom">
+        <div class="hero-names anim-fade-up">
+          <span class="hero-groom">少雄</span>
+          <span class="hero-amp">&</span>
+          <span class="hero-bride">珍妮</span>
+        </div>
+        <p class="hero-date anim-fade-up">2026 · X月X日</p>
+        <div class="scroll-down anim-fade-up">
+          <span>向上滑动</span>
+          <div class="scroll-line"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 我们结婚啦 ========== -->
+    <section class="section section-announce">
+      <div class="announce-badge anim-fade-up">
+        <span class="badge-text">WE ARE GETTING MARRIED</span>
+      </div>
+      <h2 class="announce-title anim-fade-up">我们结婚啦</h2>
+      <p class="announce-sub anim-fade-up">林少雄 ♥ 刘珍妮</p>
+      <div class="announce-line anim-fade-up"></div>
+      <p class="announce-quote anim-fade-up">
+        遇见你是命运的安排<br>
+        而爱上你是我情不自禁
+      </p>
+    </section>
+
+    <!-- ========== 照片区 1: 大图展示 ========== -->
+    <section class="section photo-section">
+      <div class="photo-full anim-fade-up">
+        <img src="images/photo5.jpg" alt="" loading="lazy">
+      </div>
+      <div class="photo-caption anim-fade-up">
+        <p>山野之间 遇见最美的你</p>
+      </div>
+    </section>
+
+    <!-- ========== 照片区 2: 双图并排 ========== -->
+    <section class="section photo-section">
+      <div class="photo-row anim-fade-up">
+        <div class="photo-half">
+          <img src="images/photo2.jpg" alt="" loading="lazy">
+        </div>
+        <div class="photo-half">
+          <img src="images/photo3.jpg" alt="" loading="lazy">
+        </div>
+      </div>
+      <div class="quote-card anim-fade-up">
+        <p class="quote-en">"The best thing to hold onto in life is each other."</p>
+      </div>
+    </section>
+
+    <!-- ========== 照片区 3: 单图 + 文字 ========== -->
+    <section class="section photo-section">
+      <div class="photo-with-text anim-fade-up">
+        <div class="photo-text-img">
+          <img src="images/photo4.jpg" alt="" loading="lazy">
+        </div>
+        <div class="photo-text-content">
+          <p class="ptc-label">OUR STORY</p>
+          <p class="ptc-text">从相识到相知<br>从相知到相爱<br>每一步都是命运最好的安排</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 照片区 4: 全宽大图 ========== -->
+    <section class="section photo-section no-padding">
+      <div class="photo-full-bleed anim-fade-up">
+        <img src="images/photo10.jpg" alt="" loading="lazy">
+        <div class="photo-full-overlay">
+          <p>执子之手 与子偕老</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 照片网格区 ========== -->
+    <section class="section photo-section">
+      <div class="section-header anim-fade-up">
+        <p class="section-label">GALLERY</p>
+        <h2 class="section-title">甜蜜瞬间</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="photo-grid anim-fade-up">
+        <div class="grid-item grid-tall">
+          <img src="images/photo7.jpg" alt="" loading="lazy">
+        </div>
+        <div class="grid-item">
+          <img src="images/photo8.jpg" alt="" loading="lazy">
+        </div>
+        <div class="grid-item">
+          <img src="images/photo9.jpg" alt="" loading="lazy">
+        </div>
+        <div class="grid-item">
+          <img src="images/photo11.jpg" alt="" loading="lazy">
+        </div>
+        <div class="grid-item grid-tall">
+          <img src="images/photo12.jpg" alt="" loading="lazy">
+        </div>
+        <div class="grid-item">
+          <img src="images/photo13.jpg" alt="" loading="lazy">
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 横向滑动相册 ========== -->
+    <section class="section photo-section">
+      <div class="section-header anim-fade-up">
+        <p class="section-label">MORE MOMENTS</p>
+        <h2 class="section-title">更多回忆</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="horizontal-scroll anim-fade-up">
+        <div class="scroll-track">
+          <div class="scroll-card"><img src="images/photo14.jpg" alt="" loading="lazy"></div>
+          <div class="scroll-card"><img src="images/photo15.jpg" alt="" loading="lazy"></div>
+          <div class="scroll-card"><img src="images/photo16.jpg" alt="" loading="lazy"></div>
+          <div class="scroll-card"><img src="images/photo17.jpg" alt="" loading="lazy"></div>
+          <div class="scroll-card"><img src="images/photo18.jpg" alt="" loading="lazy"></div>
+          <div class="scroll-card"><img src="images/photo19.jpg" alt="" loading="lazy"></div>
+          <div class="scroll-card"><img src="images/photo20.jpg" alt="" loading="lazy"></div>
+          <div class="scroll-card"><img src="images/photo21.jpg" alt="" loading="lazy"></div>
+          <div class="scroll-card"><img src="images/photo22.jpg" alt="" loading="lazy"></div>
+          <div class="scroll-card"><img src="images/photo23.jpg" alt="" loading="lazy"></div>
+          <div class="scroll-card"><img src="images/photo24.jpg" alt="" loading="lazy"></div>
+        </div>
+        <p class="scroll-hint-text">← 左右滑动查看更多 →</p>
+      </div>
+    </section>
+
+    <!-- ========== 照片区 5: 大图 ========== -->
+    <section class="section photo-section">
+      <div class="photo-full anim-fade-up">
+        <img src="images/photo6.jpg" alt="" loading="lazy">
+      </div>
+      <div class="quote-card center anim-fade-up">
+        <p class="quote-cn">愿得一人心 白首不相离</p>
+      </div>
+    </section>
+
+    <!-- ========== 婚礼信息 ========== -->
+    <section class="section section-info" id="info">
+      <div class="section-header anim-fade-up">
+        <p class="section-label">WEDDING DETAILS</p>
+        <h2 class="section-title">婚礼详情</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="info-cards anim-fade-up">
+        <div class="info-card">
+          <div class="info-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <h3 class="info-label">日期</h3>
+          <p class="info-value">2026年X月X日</p>
+          <p class="info-sub">农历X月X日 星期X</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3 class="info-label">时间</h3>
+          <p class="info-value">上午 11:58</p>
+          <p class="info-sub">婚礼仪式</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3 class="info-label">地点</h3>
+          <p class="info-value">XX大酒店</p>
+          <p class="info-sub">XX市XX区XX路XX号<br>X楼 XX宴会厅</p>
+        </div>
+      </div>
+
+      <!-- 倒计时 -->
+      <div class="countdown-wrap anim-fade-up">
+        <p class="countdown-label">距离婚礼还有</p>
+        <div class="countdown">
+          <div class="cd-item">
+            <span class="cd-num" id="cd-days">--</span>
+            <span class="cd-unit">天</span>
+          </div>
+          <div class="cd-sep">:</div>
+          <div class="cd-item">
+            <span class="cd-num" id="cd-hours">--</span>
+            <span class="cd-unit">时</span>
+          </div>
+          <div class="cd-sep">:</div>
+          <div class="cd-item">
+            <span class="cd-num" id="cd-mins">--</span>
+            <span class="cd-unit">分</span>
+          </div>
+          <div class="cd-sep">:</div>
+          <div class="cd-item">
+            <span class="cd-num" id="cd-secs">--</span>
+            <span class="cd-unit">秒</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 邀请函正文 ========== -->
+    <section class="section section-invite">
+      <div class="invite-card anim-fade-up">
+        <div class="invite-flower-top">
+          <img src="images/floral.png" alt="" class="invite-floral">
+        </div>
+        <p class="invite-header">邀请函</p>
+        <div class="invite-divider-sm"></div>
+        <p class="invite-body">
+          谨定于<br>
+          <strong>公历 二〇二六年 X月X日</strong><br>
+          <span class="invite-lunar">（农历 X月X日 星期X）</span><br><br>
+          举行结婚典礼<br>
+          届时恭请 <span class="invite-guest-inline" id="guest-name-2">贵宾</span> 光临
+        </p>
+        <div class="invite-divider-sm"></div>
+        <div class="invite-parents">
+          <p>新郎之父：林XX &nbsp;&nbsp; 新郎之母：X氏</p>
+          <p>新娘之父：刘XX &nbsp;&nbsp; 新娘之母：X氏</p>
+        </div>
+        <div class="invite-sign">
+          <span>林少雄</span>
+          <span class="invite-and">&</span>
+          <span>刘珍妮</span>
+        </div>
+        <p class="invite-date">敬邀</p>
+        <div class="invite-flower-bottom">
+          <img src="images/floral.png" alt="" class="invite-floral flip">
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 祝福留言 ========== -->
+    <section class="section section-bless" id="bless">
+      <div class="section-header anim-fade-up">
+        <p class="section-label">BLESSINGS</p>
+        <h2 class="section-title">送上祝福</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="bless-list anim-fade-up" id="bless-list">
+        <!-- 预置示例祝福 -->
+        <div class="bless-item">
+          <div class="bless-avatar" style="background:#f0b8b8;">福</div>
+          <div class="bless-content">
+            <p class="bless-author">好友小明</p>
+            <p class="bless-text">百年好合！🎉 永远幸福！</p>
+          </div>
+          <div class="bless-emoji">👍 <span>12</span></div>
+        </div>
+        <div class="bless-item">
+          <div class="bless-avatar" style="background:#b8d4f0;">喜</div>
+          <div class="bless-content">
+            <p class="bless-author">闺蜜小红</p>
+            <p class="bless-text">终于等到这一天！要一直幸福哦 💕</p>
+          </div>
+          <div class="bless-emoji">❤️ <span>8</span></div>
+        </div>
+        <div class="bless-item">
+          <div class="bless-avatar" style="background:#d4f0b8;">贺</div>
+          <div class="bless-content">
+            <p class="bless-author">同事小张</p>
+            <p class="bless-text">新婚快乐！早生贵子！🎊</p>
+          </div>
+          <div class="bless-emoji">🎉 <span>5</span></div>
+        </div>
+      </div>
+
+      <!-- 简单的留言输入 -->
+      <div class="bless-input-wrap anim-fade-up">
+        <input type="text" id="bless-input" class="bless-input" placeholder="写下你的祝福..." maxlength="100">
+        <button id="bless-send" class="bless-send">送祝福</button>
+      </div>
+    </section>
+
+    <!-- ========== 尾部 ========== -->
+    <footer class="footer">
+      <div class="footer-content anim-fade-up">
+        <p class="footer-names">林少雄 & 刘珍妮</p>
+        <p class="footer-date-en">
+          <span class="footer-script">Save The Date</span>
+        </p>
+        <p class="footer-date">二〇二六年X月X日</p>
+        <div class="footer-heart">♥</div>
+        <p class="footer-thanks">感谢您的到来与祝福</p>
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

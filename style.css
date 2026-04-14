@@ -1,0 +1,1046 @@
+/* ============================================
+   婚礼邀请函 H5 — 清新风格
+   林少雄 & 刘珍妮
+   ============================================ */
+
+/* ---------- CSS 变量 ---------- */
+:root {
+  --color-bg: #faf8f4;
+  --color-bg-warm: #f5f0e8;
+  --color-bg-card: #ffffff;
+  --color-pink: #e8a0a0;
+  --color-pink-light: #f5d5d5;
+  --color-pink-soft: #fdf0f0;
+  --color-rose: #d4797a;
+  --color-sage: #8fbc8f;
+  --color-sage-light: #d4e8d4;
+  --color-gold: #c4a35a;
+  --color-text: #3a3a3a;
+  --color-text-light: #777;
+  --color-text-muted: #aaa;
+  --color-border: rgba(0,0,0,0.06);
+  --font-cn: 'Noto Serif SC', 'ZCOOL XiaoWei', '宋体', serif;
+  --font-en: 'Great Vibes', cursive;
+  --font-body: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow-soft: 0 4px 20px rgba(0,0,0,0.06);
+  --shadow-card: 0 8px 30px rgba(0,0,0,0.08);
+  --transition: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: var(--color-bg);
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* ---------- 主滚动容器 ---------- */
+.main-scroll {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ---------- 通用区块样式 ---------- */
+.section {
+  padding: 2.5rem 1.5rem;
+  position: relative;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.section-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  color: var(--color-pink);
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+
+.section-title {
+  font-family: var(--font-cn);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--color-text);
+  letter-spacing: 0.3em;
+}
+
+.section-line {
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-pink-light), var(--color-pink), var(--color-pink-light));
+  margin: 0.8rem auto 0;
+  border-radius: 1px;
+}
+
+/* ============================================
+   音乐按钮
+   ============================================ */
+.music-btn {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  color: var(--color-rose);
+}
+
+.music-btn:active { transform: scale(0.9); }
+
+.music-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.music-btn:not(.paused) {
+  animation: music-spin 3s linear infinite;
+}
+
+@keyframes music-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   花瓣飘落
+   ============================================ */
+.petals-container {
+  position: fixed;
+  inset: 0;
+  z-index: 998;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.petal {
+  position: absolute;
+  border-radius: 50% 0 50% 50%;
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: petal-fall linear infinite;
+}
+
+.petal-pink {
+  background: radial-gradient(ellipse at 30% 30%, #f9d5d5, #f0b0b0);
+}
+.petal-white {
+  background: radial-gradient(ellipse at 30% 30%, #fff5f0, #f0e0da);
+}
+.petal-green {
+  background: radial-gradient(ellipse at 30% 30%, #d8f0d8, #b8d8b8);
+}
+
+@keyframes petal-fall {
+  0% {
+    opacity: 0;
+    transform: translate(0, -20px) rotate(0deg) scale(0.8);
+  }
+  8% { opacity: 0.6; }
+  90% { opacity: 0.3; }
+  100% {
+    opacity: 0;
+    transform: translate(var(--drift), calc(100vh + 20px)) rotate(var(--rotate)) scale(0.3);
+  }
+}
+
+/* ============================================
+   封面 / Hero
+   ============================================ */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-photo {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding-top: 15vh;
+  text-align: center;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.2) 60%, transparent 100%);
+  padding-bottom: 4rem;
+}
+
+.hero-invite {
+  font-family: var(--font-cn);
+  font-size: 1.1rem;
+  color: var(--color-rose);
+  letter-spacing: 0.5em;
+  margin-bottom: 0.5rem;
+}
+
+.hero-guest-name {
+  font-family: var(--font-cn);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: 0.2em;
+  text-shadow: 0 1px 8px rgba(255,255,255,0.8);
+}
+
+.hero-invite-sub {
+  font-family: var(--font-cn);
+  font-size: 0.95rem;
+  color: var(--color-rose);
+  letter-spacing: 0.5em;
+  margin-top: 0.3rem;
+}
+
+.hero-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  text-align: center;
+  padding: 3rem 1.5rem 2.5rem;
+  background: linear-gradient(0deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.4) 70%, transparent 100%);
+}
+
+.hero-names {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.hero-groom, .hero-bride {
+  font-family: var(--font-cn);
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--color-text);
+  letter-spacing: 0.2em;
+}
+
+.hero-amp {
+  font-family: var(--font-en);
+  font-size: 2rem;
+  color: var(--color-rose);
+}
+
+.hero-date {
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  letter-spacing: 0.3em;
+  margin-top: 0.5rem;
+}
+
+.scroll-down {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1.5rem;
+  gap: 0.3rem;
+}
+
+.scroll-down span {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.2em;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 30px;
+  background: var(--color-text-muted);
+  animation: scroll-line-anim 1.5s ease-in-out infinite;
+}
+
+@keyframes scroll-line-anim {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.5); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+/* ============================================
+   我们结婚啦
+   ============================================ */
+.section-announce {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  background: var(--color-bg);
+}
+
+.announce-badge {
+  display: inline-flex;
+  margin-bottom: 1rem;
+}
+
+.badge-text {
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  color: var(--color-rose);
+  padding: 0.4rem 1.2rem;
+  border: 1px solid var(--color-pink-light);
+  border-radius: 20px;
+  background: var(--color-pink-soft);
+}
+
+.announce-title {
+  font-family: var(--font-cn);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: 0.3em;
+}
+
+.announce-sub {
+  font-family: var(--font-cn);
+  font-size: 1rem;
+  color: var(--color-rose);
+  letter-spacing: 0.2em;
+  margin-top: 0.5rem;
+}
+
+.announce-line {
+  width: 50px;
+  height: 1px;
+  background: var(--color-pink);
+  margin: 1.2rem auto;
+}
+
+.announce-quote {
+  font-family: var(--font-cn);
+  font-size: 0.95rem;
+  color: var(--color-text-light);
+  line-height: 2.2;
+  letter-spacing: 0.15em;
+}
+
+/* ============================================
+   照片展示区
+   ============================================ */
+.photo-section {
+  padding: 1rem 1.2rem;
+}
+
+.photo-section.no-padding {
+  padding: 1rem 0;
+}
+
+/* 全宽照片 */
+.photo-full {
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+}
+
+.photo-full img {
+  width: 100%;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.photo-caption {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.photo-caption p {
+  font-family: var(--font-cn);
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  letter-spacing: 0.2em;
+}
+
+/* 双图并排 */
+.photo-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.photo-half {
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+}
+
+.photo-half img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 3/4;
+}
+
+/* 语录卡片 */
+.quote-card {
+  margin-top: 1.2rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+.quote-card.center {
+  padding: 1.5rem 1rem;
+}
+
+.quote-en {
+  font-family: var(--font-en);
+  font-size: 1.1rem;
+  color: var(--color-text-light);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.quote-cn {
+  font-family: var(--font-cn);
+  font-size: 1.1rem;
+  color: var(--color-text);
+  letter-spacing: 0.3em;
+  line-height: 2;
+}
+
+/* 照片+文字组合 */
+.photo-with-text {
+  display: flex;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.photo-text-img {
+  flex: 1;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+}
+
+.photo-text-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  min-height: 200px;
+}
+
+.photo-text-content {
+  flex: 0.8;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.5rem 0;
+}
+
+.ptc-label {
+  font-size: 0.6rem;
+  color: var(--color-pink);
+  letter-spacing: 0.2em;
+  margin-bottom: 0.5rem;
+}
+
+.ptc-text {
+  font-family: var(--font-cn);
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  line-height: 2.2;
+  letter-spacing: 0.1em;
+}
+
+/* 全出血大图 */
+.photo-full-bleed {
+  position: relative;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.photo-full-bleed img {
+  width: 100%;
+  display: block;
+  max-height: 65vh;
+  object-fit: cover;
+}
+
+.photo-full-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 3rem 1.5rem 1.5rem;
+  background: linear-gradient(transparent, rgba(0,0,0,0.35));
+}
+
+.photo-full-overlay p {
+  font-family: var(--font-cn);
+  font-size: 1.1rem;
+  color: #fff;
+  letter-spacing: 0.3em;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+/* 照片网格 */
+.photo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.grid-item {
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+}
+
+.grid-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 1;
+  transition: transform 0.5s ease;
+}
+
+.grid-item.grid-tall {
+  grid-row: span 2;
+}
+
+.grid-item.grid-tall img {
+  aspect-ratio: auto;
+}
+
+/* 横向滚动相册 */
+.horizontal-scroll {
+  width: 100%;
+  overflow: visible;
+}
+
+.scroll-track {
+  display: flex;
+  gap: 0.8rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 0.5rem 0.8rem;
+  scrollbar-width: none;
+}
+
+.scroll-track::-webkit-scrollbar { display: none; }
+
+.scroll-card {
+  flex: 0 0 65%;
+  scroll-snap-align: center;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+}
+
+.scroll-card img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+}
+
+.scroll-hint-text {
+  text-align: center;
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  margin-top: 0.5rem;
+  letter-spacing: 0.1em;
+  animation: hint-fade 2s ease-in-out infinite;
+}
+
+@keyframes hint-fade {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+/* ============================================
+   婚礼信息
+   ============================================ */
+.section-info {
+  background: var(--color-bg-warm);
+  padding: 3rem 1.5rem;
+}
+
+.info-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.info-card {
+  background: var(--color-bg-card);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--color-border);
+}
+
+.info-icon {
+  margin-bottom: 0.6rem;
+}
+
+.info-icon svg {
+  width: 28px;
+  height: 28px;
+  color: var(--color-rose);
+  margin: 0 auto;
+}
+
+.info-label {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+
+.info-value {
+  font-family: var(--font-cn);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  letter-spacing: 0.1em;
+}
+
+.info-sub {
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+  margin-top: 0.2rem;
+  line-height: 1.6;
+}
+
+/* 倒计时 */
+.countdown-wrap {
+  text-align: center;
+}
+
+.countdown-label {
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+  letter-spacing: 0.3em;
+  margin-bottom: 1rem;
+}
+
+.countdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.cd-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.cd-num {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-rose);
+  min-width: 3rem;
+  text-align: center;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.3rem 0.5rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.cd-unit {
+  font-size: 0.65rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.2em;
+}
+
+.cd-sep {
+  font-size: 1.3rem;
+  color: var(--color-pink);
+  margin-bottom: 1rem;
+}
+
+/* ============================================
+   邀请函卡片
+   ============================================ */
+.section-invite {
+  padding: 2rem 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.invite-card {
+  background: var(--color-bg-card);
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--color-border);
+  max-width: 360px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.invite-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-pink-light), var(--color-rose), var(--color-pink-light));
+}
+
+.invite-floral {
+  width: 100px;
+  margin: 0 auto;
+  opacity: 0.5;
+}
+
+.invite-floral.flip {
+  transform: rotate(180deg);
+}
+
+.invite-flower-top { margin-bottom: 0.5rem; }
+.invite-flower-bottom { margin-top: 0.5rem; }
+
+.invite-header {
+  font-family: var(--font-cn);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--color-text);
+  letter-spacing: 0.5em;
+}
+
+.invite-divider-sm {
+  width: 30px;
+  height: 1px;
+  background: var(--color-pink);
+  margin: 0.8rem auto;
+}
+
+.invite-body {
+  font-family: var(--font-cn);
+  font-size: 0.9rem;
+  color: var(--color-text-light);
+  line-height: 2.2;
+  letter-spacing: 0.08em;
+}
+
+.invite-body strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.invite-lunar {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.invite-guest-inline {
+  color: var(--color-rose);
+  font-weight: 600;
+}
+
+.invite-parents {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  line-height: 1.8;
+}
+
+.invite-sign {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  font-family: var(--font-cn);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  letter-spacing: 0.1em;
+}
+
+.invite-and {
+  font-family: var(--font-en);
+  font-size: 1.4rem;
+  color: var(--color-rose);
+}
+
+.invite-date {
+  font-family: var(--font-cn);
+  font-size: 0.9rem;
+  color: var(--color-rose);
+  letter-spacing: 0.5em;
+  margin-top: 0.5rem;
+}
+
+/* ============================================
+   祝福留言
+   ============================================ */
+.section-bless {
+  padding: 2.5rem 1.5rem;
+  background: var(--color-bg-warm);
+}
+
+.bless-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+
+.bless-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  background: var(--color-bg-card);
+  border-radius: var(--radius);
+  padding: 1rem;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--color-border);
+}
+
+.bless-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: #fff;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.bless-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.bless-author {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 0.2rem;
+}
+
+.bless-text {
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  line-height: 1.6;
+}
+
+.bless-emoji {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  flex-shrink: 0;
+  padding: 0.3rem 0.5rem;
+  background: var(--color-bg);
+  border-radius: 20px;
+}
+
+.bless-emoji span {
+  font-size: 0.7rem;
+}
+
+/* 祝福输入 */
+.bless-input-wrap {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.bless-input {
+  flex: 1;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 25px;
+  background: var(--color-bg-card);
+  font-size: 0.85rem;
+  color: var(--color-text);
+  outline: none;
+  transition: border-color 0.3s;
+  font-family: inherit;
+}
+
+.bless-input:focus {
+  border-color: var(--color-pink);
+}
+
+.bless-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.bless-send {
+  padding: 0.8rem 1.2rem;
+  background: linear-gradient(135deg, var(--color-pink), var(--color-rose));
+  color: #fff;
+  border-radius: 25px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 2px 10px rgba(212, 121, 122, 0.3);
+  transition: all 0.3s;
+}
+
+.bless-send:active {
+  transform: scale(0.95);
+}
+
+/* ============================================
+   尾部
+   ============================================ */
+.footer {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  background: var(--color-bg);
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.footer-names {
+  font-family: var(--font-cn);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--color-text);
+  letter-spacing: 0.2em;
+}
+
+.footer-script {
+  font-family: var(--font-en);
+  font-size: 1.6rem;
+  color: var(--color-rose);
+}
+
+.footer-date {
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+  letter-spacing: 0.3em;
+}
+
+.footer-heart {
+  font-size: 1.5rem;
+  color: var(--color-rose);
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  15% { transform: scale(1.2); }
+  30% { transform: scale(1); }
+  45% { transform: scale(1.15); }
+  60% { transform: scale(1); }
+}
+
+.footer-thanks {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.15em;
+}
+
+/* ============================================
+   滚动入场动画
+   ============================================ */
+.anim-fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s var(--transition), transform 0.7s var(--transition);
+}
+
+.anim-fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 交错延迟 */
+.section-announce .anim-fade-up:nth-child(1) { transition-delay: 0s; }
+.section-announce .anim-fade-up:nth-child(2) { transition-delay: 0.1s; }
+.section-announce .anim-fade-up:nth-child(3) { transition-delay: 0.2s; }
+.section-announce .anim-fade-up:nth-child(4) { transition-delay: 0.3s; }
+.section-announce .anim-fade-up:nth-child(5) { transition-delay: 0.4s; }
+
+/* ============================================
+   响应式
+   ============================================ */
+@media (max-height: 680px) {
+  .hero-guest-name { font-size: 1.6rem; }
+  .hero-groom, .hero-bride { font-size: 1.4rem; }
+  .hero-overlay { padding-top: 10vh; }
+}
+
+@media (min-width: 420px) {
+  .info-cards {
+    flex-direction: row;
+    gap: 0.8rem;
+  }
+  .info-card {
+    flex: 1;
+    padding: 1.2rem 0.8rem;
+  }
+  .scroll-card {
+    flex: 0 0 50%;
+  }
+}
+
+@media (min-width: 768px) {
+  .section { padding: 3rem 2rem; }
+  .photo-grid { gap: 0.8rem; }
+  .scroll-card { flex: 0 0 40%; }
+}

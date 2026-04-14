@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>婚礼请柬 — 宾客链接生成器</title>
+  <style>
+    :root {
+      --bg: #1a1a2e;
+      --card: #16213e;
+      --accent: #c9a96e;
+      --text: #e0d8cc;
+      --text-muted: #8a8696;
+      --border: rgba(201,169,110,0.2);
+      --success: #4ade80;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    .container { max-width: 700px; margin: 0 auto; }
+    h1 {
+      text-align: center;
+      color: var(--accent);
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+    }
+    .subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    label {
+      display: block;
+      color: var(--accent);
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    input:focus, textarea:focus {
+      border-color: var(--accent);
+    }
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+      line-height: 1.8;
+    }
+    .hint {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+    }
+    .btn-row {
+      display: flex;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+    button {
+      padding: 0.7rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #1a1a2e;
+      font-weight: 600;
+    }
+    .btn-primary:hover { background: #d4b87a; }
+    .btn-secondary {
+      background: rgba(201,169,110,0.15);
+      color: var(--accent);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { background: rgba(201,169,110,0.25); }
+
+    /* 结果表格 */
+    #results { display: none; }
+    #results.show { display: block; }
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .result-count {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .link-list {
+      list-style: none;
+    }
+    .link-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.8rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: background 0.2s;
+    }
+    .link-item:hover { background: rgba(255,255,255,0.03); }
+    .link-name {
+      min-width: 80px;
+      font-weight: 600;
+      color: var(--accent);
+      font-size: 0.9rem;
+    }
+    .link-url {
+      flex: 1;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      word-break: break-all;
+      font-family: monospace;
+    }
+    .btn-copy {
+      padding: 0.3rem 0.8rem;
+      font-size: 0.75rem;
+      background: rgba(201,169,110,0.1);
+      color: var(--accent);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+    .btn-copy:hover { background: rgba(201,169,110,0.2); }
+    .btn-copy.copied {
+      background: rgba(74,222,128,0.15);
+      color: var(--success);
+      border-color: var(--success);
+    }
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--accent);
+      color: #1a1a2e;
+      padding: 0.6rem 1.5rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: transform 0.3s ease;
+      z-index: 100;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>💍 宾客链接生成器</h1>
+    <p class="subtitle">批量生成每位宾客的专属婚礼邀请链接</p>
+
+    <div class="card">
+      <label for="base-url">请柬网址 (部署后的地址)</label>
+      <input type="text" id="base-url" value="https://你的用户名.github.io/wedding-invitation/" placeholder="https://example.github.io/wedding-invitation/">
+      <p class="hint">部署到 GitHub Pages 后填入实际地址</p>
+    </div>
+
+    <div class="card">
+      <label for="guest-names">宾客名单 (每行一个名字)</label>
+      <textarea id="guest-names" placeholder="张三&#10;李四&#10;王五&#10;赵六&#10;陈七&#10;周八"></textarea>
+      <p class="hint">每行输入一个宾客姓名，生成后每人对应一个专属链接</p>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-primary" onclick="generateLinks()">🔗 生成链接</button>
+      <button class="btn-secondary" onclick="copyAll()">📋 复制全部</button>
+    </div>
+
+    <div class="card" id="results">
+      <div class="result-header">
+        <label>生成结果</label>
+        <span class="result-count" id="result-count"></span>
+      </div>
+      <ul class="link-list" id="link-list"></ul>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">已复制到剪贴板</div>
+
+  <script>
+    let generatedLinks = [];
+
+    function generateLinks() {
+      const baseUrl = document.getElementById('base-url').value.trim();
+      const namesText = document.getElementById('guest-names').value.trim();
+
+      if (!baseUrl) {
+        showToast('请填写请柬网址');
+        return;
+      }
+      if (!namesText) {
+        showToast('请输入宾客名单');
+        return;
+      }
+
+      const names = namesText.split('\n').map(n => n.trim()).filter(n => n.length > 0);
+      const base = baseUrl.endsWith('/') ? baseUrl : baseUrl + '/';
+
+      generatedLinks = names.map(name => ({
+        name: name,
+        url: `${base}?name=${encodeURIComponent(name)}`
+      }));
+
+      // 渲染结果
+      const listEl = document.getElementById('link-list');
+      listEl.innerHTML = generatedLinks.map((item, i) => `
+        <li class="link-item">
+          <span class="link-name">${item.name}</span>
+          <span class="link-url">${item.url}</span>
+          <button class="btn-copy" onclick="copyLink(${i}, this)">复制</button>
+        </li>
+      `).join('');
+
+      document.getElementById('result-count').textContent = `共 ${names.length} 位宾客`;
+      document.getElementById('results').classList.add('show');
+      showToast(`已生成 ${names.length} 个链接`);
+    }
+
+    function copyLink(index, btnEl) {
+      const link = generatedLinks[index];
+      navigator.clipboard.writeText(link.url).then(() => {
+        btnEl.textContent = '已复制';
+        btnEl.classList.add('copied');
+        setTimeout(() => {
+          btnEl.textContent = '复制';
+          btnEl.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    function copyAll() {
+      if (generatedLinks.length === 0) {
+        showToast('请先生成链接');
+        return;
+      }
+      const text = generatedLinks.map(l => `${l.name}: ${l.url}`).join('\n');
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('全部链接已复制');
+      });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+  </script>
+</body>
+</html>
