@@ -26,12 +26,55 @@
 
     if (name && name.trim()) {
       const decoded = decodeURIComponent(name.trim());
+      // 设置所有宾客姓名位置
       const el1 = $('#guest-name');
       const el2 = $('#guest-name-2');
+      const el3 = $('#env-guest-name');
       if (el1) el1.textContent = decoded;
       if (el2) el2.textContent = decoded;
+      if (el3) el3.textContent = decoded;
       document.title = `${decoded} — 林少雄 & 刘珍妮 婚礼邀请`;
     }
+  }
+
+  // ==================== 信封封面 ====================
+  function initEnvelope() {
+    const cover = $('#envelope-cover');
+    const seal = $('#env-seal');
+    if (!cover || !seal) return;
+
+    // 锁定滚动
+    document.body.classList.add('envelope-locked');
+
+    // 点击印章打开信封
+    seal.addEventListener('click', openEnvelope);
+    // 也允许点击任意位置打开（延迟，让印章动画先播完）
+    setTimeout(() => {
+      cover.addEventListener('click', openEnvelope);
+    }, 2500);
+  }
+
+  function openEnvelope() {
+    const cover = $('#envelope-cover');
+    if (!cover || cover.classList.contains('opening')) return;
+
+    // 触发开启动画
+    cover.classList.add('opening');
+
+    // 尝试播放音乐
+    const audio = $('#bg-music');
+    const btn = $('#music-toggle');
+    if (audio) {
+      audio.play().then(() => {
+        btn && btn.classList.remove('paused');
+      }).catch(() => {});
+    }
+
+    // 动画结束后移除信封
+    setTimeout(() => {
+      document.body.classList.remove('envelope-locked');
+      cover.classList.add('hidden');
+    }, 1000);
   }
 
   // ==================== 2. 滚动入场动画 ====================
@@ -218,6 +261,7 @@
   // ==================== 初始化 ====================
   function init() {
     initGuestName();
+    initEnvelope();
     initHeroAnimations();
     initScrollAnimations();
     initCountdown();

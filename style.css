@@ -61,6 +61,206 @@ button {
   font-family: inherit;
 }
 
+/* 信封未打开时锁定滚动 */
+body.envelope-locked {
+  overflow: hidden;
+}
+
+/* ============================================
+   信封封面（暗红中式风格）
+   ============================================ */
+.envelope-cover {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease 0.3s;
+}
+
+.envelope-cover.opening {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.envelope-cover.hidden {
+  display: none;
+}
+
+.envelope-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 30%, #8B2D35 0%, #6B1C23 40%, #4A0E15 100%);
+  z-index: 0;
+}
+
+/* 顶部/底部装饰线 */
+.env-top-line, .env-bottom-line {
+  position: absolute;
+  left: 2rem;
+  right: 2rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,169,110,0.3), transparent);
+  z-index: 1;
+}
+.env-top-line { top: 3rem; }
+.env-bottom-line { bottom: 3rem; }
+
+.env-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  text-align: center;
+}
+
+/* 送呈 */
+.env-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.env-char {
+  font-family: var(--font-cn);
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #C9A96E;
+  letter-spacing: 0.3em;
+  line-height: 1.2;
+  text-shadow: 0 2px 10px rgba(201,169,110,0.3);
+}
+
+.env-subtitle {
+  font-family: var(--font-cn);
+  font-size: 0.95rem;
+  color: rgba(242,228,208,0.7);
+  letter-spacing: 0.5em;
+  margin-top: 0.5rem;
+}
+
+.env-guest-name {
+  font-family: var(--font-cn);
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #D4B87A;
+  letter-spacing: 0.3em;
+  text-shadow: 0 1px 8px rgba(212,184,122,0.4);
+}
+
+/* 火漆印章 */
+.env-seal-wrap {
+  margin-top: 1rem;
+}
+
+.env-seal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.env-seal-outer {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #c0392b, #8B2020 50%, #5C1414 100%);
+  box-shadow:
+    0 4px 16px rgba(0,0,0,0.4),
+    inset 0 -3px 8px rgba(0,0,0,0.3),
+    inset 0 3px 8px rgba(255,255,255,0.1),
+    0 0 30px rgba(139,32,32,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  animation: seal-stamp 0.8s cubic-bezier(0.25,0.46,0.45,0.94) 1.2s both;
+  transition: transform 0.2s ease;
+}
+
+.env-seal:active .env-seal-outer {
+  transform: scale(0.92);
+}
+
+.env-seal-outer::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.15);
+}
+
+.env-seal-inner {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 2px solid rgba(232,213,163,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.env-seal-inner span {
+  font-family: var(--font-cn);
+  font-size: 1.3rem;
+  color: #E8D5A3;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+@keyframes seal-stamp {
+  0% { transform: scale(3) rotate(-15deg); opacity: 0; }
+  60% { transform: scale(0.9) rotate(2deg); opacity: 1; }
+  80% { transform: scale(1.05) rotate(-1deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.env-seal-hint {
+  font-size: 0.7rem;
+  color: rgba(201,169,110,0.5);
+  letter-spacing: 0.2em;
+  animation: hint-blink 2s ease-in-out infinite 2s;
+}
+
+@keyframes hint-blink {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+/* Save The Date */
+.env-save-date {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-en);
+  font-size: 1.8rem;
+  color: #C9A96E;
+  opacity: 0.8;
+  margin-top: 1.5rem;
+}
+
+/* 信封元素入场动画 */
+.env-anim {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: env-fade-in 0.6s ease forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes env-fade-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* ---------- 主滚动容器 ---------- */
 .main-scroll {
   width: 100%;

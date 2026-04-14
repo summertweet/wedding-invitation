@@ -25,6 +25,39 @@
     <source src="music/background.mp3" type="audio/mpeg">
   </audio>
 
+  <!-- ==================== 信封封面 ==================== -->
+  <div class="envelope-cover" id="envelope-cover">
+    <div class="envelope-bg"></div>
+    <!-- 顶部装饰线 -->
+    <div class="env-top-line"></div>
+    <div class="env-content">
+      <!-- 送呈 -->
+      <div class="env-title">
+        <span class="env-char env-anim" style="--delay:0.3s">送</span>
+        <span class="env-char env-anim" style="--delay:0.5s">呈</span>
+      </div>
+      <!-- 期盼文字 -->
+      <p class="env-subtitle env-anim" style="--delay:0.7s">期盼您的到来和见证</p>
+      <!-- 宾客姓名 -->
+      <p class="env-guest-name env-anim" id="env-guest-name" style="--delay:0.9s">尊贵的宾客</p>
+      <!-- 火漆印章 (点击打开) -->
+      <div class="env-seal-wrap env-anim" style="--delay:1.2s">
+        <div class="env-seal" id="env-seal">
+          <div class="env-seal-outer">
+            <div class="env-seal-inner">
+              <span>亲启</span>
+            </div>
+          </div>
+          <p class="env-seal-hint">点击打开</p>
+        </div>
+      </div>
+    </div>
+    <!-- Save The Date -->
+    <p class="env-save-date env-anim" style="--delay:1.5s">Save The Date</p>
+    <!-- 底部装饰线 -->
+    <div class="env-bottom-line"></div>
+  </div>
+
   <!-- 飘落花瓣 -->
   <div id="petals-container" class="petals-container"></div>
 
