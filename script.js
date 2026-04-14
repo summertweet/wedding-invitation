@@ -33,7 +33,7 @@
       if (el1) el1.textContent = decoded;
       if (el2) el2.textContent = decoded;
       if (el3) el3.textContent = decoded;
-      document.title = `${decoded} — 林少雄 & 刘珍妮 婚礼邀请`;
+      document.title = `${decoded}亲启 — 林少雄&刘珍妮的婚礼邀请`;
     }
   }
 
